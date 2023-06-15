@@ -34,7 +34,8 @@ public class Person {
         return age;
     }
     // Mátodo que nos devuelve un String con todos los campos
-    public String getAll() {
+    @Override
+    public String toString() {
         return "Nombre: " + name + ". Ciudad: " + town + ". Edad: " + age + ".";
     }
 

@@ -65,43 +65,32 @@ public class Main {
 
             // a.
             List<Person> peopleFilterAge = filterAge(peopleClass);
-            peopleFilterAge.forEach(person -> System.out.println(person.getAll()));
+            peopleFilterAge.forEach(person -> System.out.println(person.toString()));
             System.out.println("---------------------------------");
+
             // b.
             List<Person> peopleFilterNameA = filterNameA(peopleClass);
-            peopleFilterNameA.forEach(person -> System.out.println(person.getAll()));
+            peopleFilterNameA.forEach(person -> System.out.println(person.toString()));
             System.out.println("---------------------------------");
+
             // c.
             Optional<Person> personMadrid = peopleFilterAge.stream()
                     .filter(person -> person.getTown().equals("Madrid"))
                     .findFirst();
-            if (personMadrid.isPresent()) {
-                System.out.println(personMadrid.get().getAll());
-            } else {
-                System.out.println("No se ha encontrado a ninguna persona cuya ciudad sea Madrid y tenga menos de 25 años");
-            }
+            personMadrid.ifPresentOrElse(System.out::println, () -> System.out.println("No se ha encontrado a ninguna persona cuya ciudad sea Madrid y tenga menos de 25 años"));
             System.out.println("---------------------------------");
+
             // d.
             Optional<Person> personBarcelona = peopleFilterAge.stream()
                     .filter(person -> person.getTown().equals("Barcelona"))
                     .findFirst();
-            if (personBarcelona.isPresent()) {
-                System.out.println(personBarcelona.get().getAll());
-            } else {
-                System.out.println("No se ha encontrado a ninguna persona cuya ciudad sea Barcelona y tenga menos de 25 años");
-            }
+            personBarcelona.ifPresentOrElse(System.out::println, () -> System.out.println("No se ha encontrado a ninguna persona cuya ciudad sea Barcelona y tenga menos de 25 años"));
             System.out.println("---------------------------------");
+
         } catch (IOException e){
             System.out.println(e + " - La ruta al archivo csv tiene un error, vuelve a revisarla");
         }
     }
-    
-
-
-
-
-
-
     public static List<Person> filterAge (List<Person> personList){
         List<Person> personFilterAge = new ArrayList<>();
         personList.stream()
