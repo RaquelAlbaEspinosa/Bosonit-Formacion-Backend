@@ -12,7 +12,4 @@ public abstract class PropertyCharge implements CommandLineRunner {
     @Value("${new.property}")
     String property;
 
-    public void saludo(){
-        System.out.println("hola");
-    }
 }
