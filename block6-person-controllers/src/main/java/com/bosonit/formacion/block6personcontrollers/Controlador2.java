@@ -10,22 +10,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/controlador2")
 public class Controlador2 {
-    Persona persona;
-    List<Ciudad> ciudades;
     @Autowired
-    public Controlador2 (ServicePersona servicePersona, ServiceCiudad ciudadService){
-        this.persona = servicePersona.user;
-        this.ciudades = ciudadService.ciudades;
-    }
+    ServicePersona servicePersona;
+    @Autowired
+    ServiceCiudad ciudadService;
+
     @GetMapping("/getPersona")
     public Persona getPersona (){
-        this.persona.setPoblacion(persona.getPoblacion());
-        this.persona.setNombre(persona.getNombre());
-        this.persona.setEdad(persona.getEdad() * 2);
-        return persona;
+        this.servicePersona.user.setPoblacion(servicePersona.user.getPoblacion());
+        this.servicePersona.user.setNombre(servicePersona.user.getNombre());
+        this.servicePersona.user.setEdad(servicePersona.user.getEdad() * 2);
+        return servicePersona.user;
     }
     @GetMapping("/getCiudades")
     public List<Ciudad> getCiudades (){
-        return this.ciudades;
+        return this.ciudadService.ciudades;
     }
 }

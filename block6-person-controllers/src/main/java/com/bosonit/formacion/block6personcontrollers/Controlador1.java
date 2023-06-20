@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/controlador1")
 public class Controlador1 {
-    private ServicePersona personaService;
-    private ServiceCiudad ciudadService;
     @Autowired
-    public Controlador1(ServicePersona personaService, ServiceCiudad ciudadService) {
-        this.personaService = personaService;
-        this.ciudadService = ciudadService;
-    }
+    private ServicePersona personaService;
+    @Autowired
+    private ServiceCiudad ciudadService;
+
     @GetMapping("/addPersona")
     public ResponseEntity<Persona> addPersona (
         @RequestHeader("nombre") String nombre,
