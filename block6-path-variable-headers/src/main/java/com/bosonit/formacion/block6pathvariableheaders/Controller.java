@@ -3,13 +3,14 @@ package com.bosonit.formacion.block6pathvariableheaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class Controller {
+    private int counter = 1;
     @GetMapping("/greeting")
-    public String greeting(@RequestParam(defaultValue = "World") String name){
-        return new User(1, name).toString();
+    public User greeting(@RequestParam(defaultValue = "World") String name){
+        return new User(counter++, name);
     }
     @PostMapping("/json")
     public String json(@RequestBody String json){
