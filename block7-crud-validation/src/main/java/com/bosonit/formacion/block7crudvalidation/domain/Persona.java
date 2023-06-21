@@ -2,6 +2,7 @@ package com.bosonit.formacion.block7crudvalidation.domain;
 
 import com.bosonit.formacion.block7crudvalidation.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.controller.dto.PersonaOutputDto;
+import com.bosonit.formacion.block7crudvalidation.error.UnprocessableEntityException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -29,44 +30,44 @@ public class Persona {
     String imageUrl;
     Date terminationDate;
 
-    public Persona (PersonaInputDto personaInputDto) throws Exception {
+    public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
         //Usuario
         if (personaInputDto.getUsuario() == null) {
-            throw new Exception("Usuario no puede ser nulo");
+            throw new UnprocessableEntityException("Usuario no puede ser nulo");
         } else if (personaInputDto.getUsuario().length()>10) {
-            throw  new Exception("Longitud de usuario no puede ser superior a 10 caracteres");
+            throw  new UnprocessableEntityException("Longitud de usuario no puede ser superior a 10 caracteres");
         } else if (personaInputDto.getUsuario().length()<6) {
-            throw  new Exception("Longitud de usuario no puede ser menor a 6 caracteres");
+            throw  new UnprocessableEntityException("Longitud de usuario no puede ser menor a 6 caracteres");
         } else {
             this.usuario = personaInputDto.getUsuario();
         }
         //Contraseña
         if (personaInputDto.getPassword() == null) {
-            throw new Exception("Contraseña no puede ser nulo");
+            throw new UnprocessableEntityException("Contraseña no puede ser nulo");
         } else {
             this.password = personaInputDto.getPassword();
         }
         //Nombre
         if(personaInputDto.getName() == null){
-            throw new Exception("Nombre no puede ser nulo");
+            throw new UnprocessableEntityException("Nombre no puede ser nulo");
         } else {
             this.name = personaInputDto.getName();
         }
         //Email de compañía
         if(personaInputDto.getCompanyEmail() == null){
-            throw new Exception("Email de compañía no puede ser nulo");
+            throw new UnprocessableEntityException("Email de compañía no puede ser nulo");
         } else {
             this.companyEmail = personaInputDto.getCompanyEmail();
         }
         //Email personal
         if(personaInputDto.getPersonalEmail() == null){
-            throw new Exception("Email personal no puede ser nulo");
+            throw new UnprocessableEntityException("Email personal no puede ser nulo");
         } else {
             this.personalEmail = personaInputDto.getPersonalEmail();
         }
         //Ciudad
         if(personaInputDto.getCity() == null){
-            throw new Exception("Ciudad no puede ser null");
+            throw new UnprocessableEntityException("Ciudad no puede ser null");
         } else {
             this.city = personaInputDto.getCity();
         }
