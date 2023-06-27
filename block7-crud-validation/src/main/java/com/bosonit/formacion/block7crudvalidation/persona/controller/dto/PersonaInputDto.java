@@ -1,4 +1,4 @@
-package com.bosonit.formacion.block7crudvalidation.controller.dto;
+package com.bosonit.formacion.block7crudvalidation.persona.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonaOutputDto {
+public class PersonaInputDto {
     int id;
     String usuario;
     String password;

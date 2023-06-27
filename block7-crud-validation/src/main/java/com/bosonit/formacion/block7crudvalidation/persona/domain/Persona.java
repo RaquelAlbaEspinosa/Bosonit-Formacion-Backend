@@ -1,23 +1,29 @@
-package com.bosonit.formacion.block7crudvalidation.domain;
+package com.bosonit.formacion.block7crudvalidation.persona.domain;
 
-import com.bosonit.formacion.block7crudvalidation.controller.dto.PersonaInputDto;
-import com.bosonit.formacion.block7crudvalidation.controller.dto.PersonaOutputDto;
+import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaEstudianteOutputDto;
+import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
+import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
+import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaProfesorOutputDto;
+import com.bosonit.formacion.block7crudvalidation.profesor.domain.Profesor;
+import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import com.bosonit.formacion.block7crudvalidation.error.UnprocessableEntityException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
-@Data
+@Table(name = "persona")
+@Getter
+@Setter
 @NoArgsConstructor
 public class Persona {
     @Id
     @GeneratedValue
-    private int id;
+    private int idPersona;
     String usuario;
     String password;
     String name;
@@ -29,6 +35,12 @@ public class Persona {
     Date createdDate;
     String imageUrl;
     Date terminationDate;
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    Student student;
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    Profesor profesor;
 
     public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
         //Usuario
@@ -87,10 +99,11 @@ public class Persona {
         this.surname = personaInputDto.getSurname();
         this.imageUrl = personaInputDto.getImageUrl();
         this.terminationDate = personaInputDto.getTerminationDate();
+        this.idPersona = personaInputDto.getId();
     }
     public PersonaOutputDto personaToPersonaOutputDto () {
         return new PersonaOutputDto(
-                this.id,
+                this.idPersona,
                 this.usuario,
                 this.password,
                 this.name,
@@ -102,6 +115,45 @@ public class Persona {
                 this.createdDate,
                 this.imageUrl,
                 this.terminationDate
+        );
+    }
+    public PersonaEstudianteOutputDto personaToPersonaEstudianteOutputDto () {
+        return new PersonaEstudianteOutputDto(
+                this.idPersona,
+                this.usuario,
+                this.password,
+                this.name,
+                this.surname,
+                this.companyEmail,
+                this.personalEmail,
+                this.city,
+                this.active,
+                this.createdDate,
+                this.imageUrl,
+                this.terminationDate,
+                this.student.getIdStudent(),
+                this.student.getNumHoursWeek(),
+                this.student.getComments(),
+                this.student.getBranch()
+        );
+    }
+    public PersonaProfesorOutputDto personaToPersonaProfesorOutputDto () {
+        return new PersonaProfesorOutputDto(
+                this.idPersona,
+                this.usuario,
+                this.password,
+                this.name,
+                this.surname,
+                this.companyEmail,
+                this.personalEmail,
+                this.city,
+                this.active,
+                this.createdDate,
+                this.imageUrl,
+                this.terminationDate,
+                this.profesor.getIdProfesor(),
+                this.profesor.getComments(),
+                this.profesor.getBranch()
         );
     }
 }
