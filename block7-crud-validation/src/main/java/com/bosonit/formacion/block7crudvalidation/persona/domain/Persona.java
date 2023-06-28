@@ -1,13 +1,9 @@
 package com.bosonit.formacion.block7crudvalidation.persona.domain;
 
-import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaEstudianteOutputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
-import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
-import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaProfesorOutputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import com.bosonit.formacion.block7crudvalidation.error.UnprocessableEntityException;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +19,7 @@ import java.util.Date;
 public class Persona {
     @Id
     @GeneratedValue
-    private int idPersona;
+    int idPersona;
     String usuario;
     String password;
     String name;
@@ -35,11 +31,9 @@ public class Persona {
     Date createdDate;
     String imageUrl;
     Date terminationDate;
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     Student student;
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     Profesor profesor;
 
     public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
@@ -95,65 +89,10 @@ public class Persona {
         } else {
             this.createdDate = personaInputDto.getCreatedDate();
         }
-        //Los que pueden ser null
+        //Sin validación
         this.surname = personaInputDto.getSurname();
         this.imageUrl = personaInputDto.getImageUrl();
         this.terminationDate = personaInputDto.getTerminationDate();
         this.idPersona = personaInputDto.getId();
-    }
-    public PersonaOutputDto personaToPersonaOutputDto () {
-        return new PersonaOutputDto(
-                this.idPersona,
-                this.usuario,
-                this.password,
-                this.name,
-                this.surname,
-                this.companyEmail,
-                this.personalEmail,
-                this.city,
-                this.active,
-                this.createdDate,
-                this.imageUrl,
-                this.terminationDate
-        );
-    }
-    public PersonaEstudianteOutputDto personaToPersonaEstudianteOutputDto () {
-        return new PersonaEstudianteOutputDto(
-                this.idPersona,
-                this.usuario,
-                this.password,
-                this.name,
-                this.surname,
-                this.companyEmail,
-                this.personalEmail,
-                this.city,
-                this.active,
-                this.createdDate,
-                this.imageUrl,
-                this.terminationDate,
-                this.student.getIdStudent(),
-                this.student.getNumHoursWeek(),
-                this.student.getComments(),
-                this.student.getBranch()
-        );
-    }
-    public PersonaProfesorOutputDto personaToPersonaProfesorOutputDto () {
-        return new PersonaProfesorOutputDto(
-                this.idPersona,
-                this.usuario,
-                this.password,
-                this.name,
-                this.surname,
-                this.companyEmail,
-                this.personalEmail,
-                this.city,
-                this.active,
-                this.createdDate,
-                this.imageUrl,
-                this.terminationDate,
-                this.profesor.getIdProfesor(),
-                this.profesor.getComments(),
-                this.profesor.getBranch()
-        );
     }
 }

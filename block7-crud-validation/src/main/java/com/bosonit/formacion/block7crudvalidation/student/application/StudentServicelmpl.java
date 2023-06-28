@@ -10,8 +10,10 @@ import com.bosonit.formacion.block7crudvalidation.student.controller.dto.Student
 import com.bosonit.formacion.block7crudvalidation.student.controller.dto.StudentOutputDto;
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.persona.repository.PersonaRepository;
+import com.bosonit.formacion.block7crudvalidation.student.controller.mapper.StudentMapper;
 import com.bosonit.formacion.block7crudvalidation.student.repository.StudentRepository;
 import jakarta.validation.Valid;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,11 @@ public class StudentServicelmpl implements StudentService{
     AsignaturaRepository asignaturaRepository;
     @Override
     public StudentOutputDto addStudent(@Valid StudentInputDto student) {
+        StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
         Persona persona = personaRepository.findById(student.getIdPersona())
                 .orElseThrow(EntityNotFoundException::new);
         Profesor profesor = null;
-        Student student1 = new Student(student);
+        Student student1 = mapper.studentInputDtoToStudent(student);
         if(student.getIdProfesor() != null){
             profesor = profesorRepository.findById(student.getIdProfesor())
                     .orElseThrow(EntityNotFoundException::new);
@@ -42,18 +45,23 @@ public class StudentServicelmpl implements StudentService{
         persona.setStudent(student1);
         student1.setPersona(persona);
         student1.setProfesor(profesor);
-        return studentRepository.save(student1).studentToStudentOutputDto();
+        studentRepository.save(student1);
+        return mapper.studentToStudentOutputDto(student1);
     }
 
     @Override
     public StudentOutputDto getStudentById(String id) {
-        return studentRepository.findById(id).orElseThrow(EntityNotFoundException::new)
-                .studentToStudentOutputDto();
+        Student student1 = studentRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
+        return mapper.studentToStudentOutputDto(student1);
     }
     @Override
     public StudentFullOutputDto getStudentByIdFull(String id) {
-        return studentRepository.findById(id).orElseThrow(EntityNotFoundException::new)
-                .studentToStudentFullOutputDto();
+        Student student1 = studentRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
+        return mapper.studentToStudentFullOutputDto(student1);
     }
 
     @Override
@@ -67,24 +75,34 @@ public class StudentServicelmpl implements StudentService{
             if(student.getPersona().getIdPersona() == id){
                 check = true;
             }
-        } return check;}).map(Student::studentToStudentOutputDto).toList();
+        } return check;}).map(student -> {
+            StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
+            return mapper.studentToStudentOutputDto(student);
+        }).toList();
     }
     @Override
     public Iterable<StudentOutputDto> getAllStudent(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return studentRepository.findAll(pageRequest).getContent().stream()
-                .map(Student::studentToStudentOutputDto).toList();
+                .map(student -> {
+                    StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
+                    return mapper.studentToStudentOutputDto(student);
+                }).toList();
     }
     @Override
     public StudentOutputDto updateStudent (@Valid StudentInputDto student, String id){
+        StudentMapper mapper = Mappers.getMapper(StudentMapper.class);
         Student studentProvisional = studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         student.setComments(student.getComments() != null ?
                 student.getComments() : studentProvisional.getComments());
-        Student student1 = new Student(student);
+        Student student1 = mapper.studentInputDtoToStudent(student);
         student1.setIdStudent(id);
+        student1.setAlumnosEstudios(studentProvisional.getAlumnosEstudios());
         if (student.getIdPersona() != 0){
             int idPersonaOriginal = studentProvisional.getPersona().getIdPersona();
-            personaRepository.findById(idPersonaOriginal).orElseThrow(EntityNotFoundException::new).setStudent(null);
+            personaRepository.findById(idPersonaOriginal)
+                    .orElseThrow(EntityNotFoundException::new)
+                    .setStudent(null);
             Persona personaProvisional = personaRepository.findById(student.getIdPersona())
                     .orElseThrow(EntityNotFoundException::new);
             student1.setPersona(personaProvisional);
@@ -95,8 +113,10 @@ public class StudentServicelmpl implements StudentService{
         if (student.getIdProfesor() != null){
             if(studentProvisional.getProfesor() != null){
                 String idProfesorOriginal = studentProvisional.getProfesor().getIdProfesor();
-                profesorRepository.findById(idProfesorOriginal).orElseThrow(EntityNotFoundException::new)
-                        .getStudents().remove(studentProvisional);
+                profesorRepository.findById(idProfesorOriginal)
+                        .orElseThrow(EntityNotFoundException::new)
+                        .getStudents()
+                        .remove(studentProvisional);
             }
             Profesor profesorProvisional = profesorRepository.findById(student.getIdProfesor())
                     .orElseThrow(EntityNotFoundException::new);
@@ -105,18 +125,21 @@ public class StudentServicelmpl implements StudentService{
         } else {
             student1.setProfesor(studentProvisional.getProfesor());
         }
-        return studentRepository.save(student1).studentToStudentOutputDto();
+        studentRepository.save(student1);
+        return mapper.studentToStudentOutputDto(student1);
     }
     @Override
     public void deleteStudent (String id){
         Student studentProvisional = studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if (studentProvisional.getPersona() != null) {
-            Persona personaProvisional = personaRepository.findById(studentProvisional.getPersona()
-                    .getIdPersona()).orElseThrow(EntityNotFoundException::new);
+            Persona personaProvisional = personaRepository
+                    .findById(studentProvisional.getPersona().getIdPersona())
+                    .orElseThrow(EntityNotFoundException::new);
             personaProvisional.setStudent(null);
         }
         if(studentProvisional.getProfesor() != null){
-            Profesor profesorProvisional = profesorRepository.findById(studentProvisional.getProfesor().getIdProfesor())
+            Profesor profesorProvisional = profesorRepository
+                    .findById(studentProvisional.getProfesor().getIdProfesor())
                     .orElseThrow(EntityNotFoundException::new);
             profesorProvisional.getStudents().remove(studentProvisional);
         }

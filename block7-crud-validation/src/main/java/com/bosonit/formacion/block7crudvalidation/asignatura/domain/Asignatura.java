@@ -1,9 +1,6 @@
 package com.bosonit.formacion.block7crudvalidation.asignatura.domain;
 
-import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaInputDto;
-import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaOutputDto;
 import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +25,6 @@ public class Asignatura {
 
     @ManyToOne
     @JoinColumn(name = "idStudent")
-    @JsonIgnore
     Student student;
     @Column(name = "asignatura")
     String asignatura;
@@ -38,21 +34,4 @@ public class Asignatura {
     Date initialDate;
     @Column(name = "fecha_final")
     Date finishDate;
-
-    public Asignatura (AsignaturaInputDto asignaturaInputDto){
-        this.idStudy = asignaturaInputDto.getIdStudy();
-        this.asignatura = asignaturaInputDto.getAsignatura();
-        this.comments = asignaturaInputDto.getComments();
-        this.initialDate = asignaturaInputDto.getInitialDate();
-        this.finishDate = asignaturaInputDto.getFinishDate();
-    }
-    public AsignaturaOutputDto asignaturaToAsignaturaOutputDto () {
-        return new AsignaturaOutputDto(
-                this.idStudy,
-                this.asignatura,
-                this.comments,
-                this.initialDate,
-                this.finishDate
-        );
-    }
 }

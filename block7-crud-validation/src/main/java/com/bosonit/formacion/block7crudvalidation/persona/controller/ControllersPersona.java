@@ -25,19 +25,24 @@ public class ControllersPersona {
                                           @RequestParam(defaultValue = "simple", required = false)
                                           String outputType){
         PersonaOutputDto persona = personaServices.getPersonaById(id);
+        ResponseEntity response = ResponseEntity.ok().body(persona);
         if(outputType.equals("simple")){
-            return ResponseEntity.ok().body(personaServices.getPersonaById(id));
+            response = ResponseEntity.ok().body(persona);
         } else if (outputType.equals("full")){
-            if(personaServices.getTypeOfPersona(persona.getId()).equals("Estudiante")){
-                return ResponseEntity.ok().body(personaServices.getPersonaByIdEstudiante(id));
-            } else if (personaServices.getTypeOfPersona(persona.getId()).equals("Profesor")) {
-                return ResponseEntity.ok().body(personaServices.getPersonaByIdProfesor(id));
-            } else {
-                return ResponseEntity.ok().body(personaServices.getPersonaById(id));
+            switch (personaServices.getTypeOfPersona(persona.getIdPersona())) {
+                case "Estudiante":
+                    response = ResponseEntity.ok()
+                            .body(personaServices.getPersonaByIdEstudiante(id));
+                    break;
+                case "Profesor":
+                    response = ResponseEntity.ok()
+                            .body(personaServices.getPersonaByIdProfesor(id));
             }
         } else {
-            return ResponseEntity.badRequest().body("El outputType debe ser 'simple' o 'full'");
+            response = ResponseEntity.badRequest()
+                    .body("El outputType debe ser 'simple' o 'full'");
         }
+        return response;
     }
     @GetMapping("/usuario/{usuario}")
     public Iterable getPersonaByUsuario (@PathVariable String usuario,

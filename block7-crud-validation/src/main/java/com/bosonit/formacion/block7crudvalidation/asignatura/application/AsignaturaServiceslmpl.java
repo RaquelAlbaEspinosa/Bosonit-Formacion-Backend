@@ -1,5 +1,6 @@
 package com.bosonit.formacion.block7crudvalidation.asignatura.application;
 
+import com.bosonit.formacion.block7crudvalidation.asignatura.controller.mapper.AsignaturaMapper;
 import com.bosonit.formacion.block7crudvalidation.asignatura.domain.Asignatura;
 import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaInputDto;
 import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaOutputDto;
@@ -8,6 +9,7 @@ import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import com.bosonit.formacion.block7crudvalidation.student.repository.StudentRepository;
 import jakarta.validation.Valid;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,39 +22,50 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
     StudentRepository studentRepository;
     @Override
     public AsignaturaOutputDto addAsignatura(@Valid AsignaturaInputDto asignatura) {
+        AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
         Student studentProvisional = studentRepository.findById(asignatura.getIdStudent())
                 .orElseThrow(EntityNotFoundException::new);
-        Asignatura asignatura1 = new Asignatura(asignatura);
+        Asignatura asignatura1 = mapper.asignaturaInputDtoToAsignatura(asignatura);
         studentProvisional.getAlumnosEstudios().add(asignatura1);
         asignatura1.setStudent(studentProvisional);
-        return asignaturaRepository.save(asignatura1).asignaturaToAsignaturaOutputDto();
+        asignaturaRepository.save(asignatura1);
+        return mapper.asignaturaToAsignaturaOutputDto(asignatura1);
     }
 
     @Override
     public AsignaturaOutputDto getAsignaturaById(String id) {
-        return asignaturaRepository.findById(id).orElseThrow(EntityNotFoundException::new)
-                .asignaturaToAsignaturaOutputDto();
+        AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
+        Asignatura asignatura = asignaturaRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        return mapper.asignaturaToAsignaturaOutputDto(asignatura);
     }
 
     @Override
     public Iterable<AsignaturaOutputDto> getAllAsignatura(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return asignaturaRepository.findAll(pageRequest).getContent().stream()
-                .map(Asignatura::asignaturaToAsignaturaOutputDto).toList();
+                .map(asignatura -> {
+                    AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
+                    return mapper.asignaturaToAsignaturaOutputDto(asignatura);
+                }).toList();
     }
     @Override
     public Iterable<AsignaturaOutputDto> getAsignaturaByStudentId (String idStudent){
         return asignaturaRepository.findAll().stream()
                 .filter(asignatura -> asignatura.getStudent().getIdStudent().equals(idStudent))
-                .map(Asignatura::asignaturaToAsignaturaOutputDto).toList();
+                .map(asignatura -> {
+                    AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
+                    return mapper.asignaturaToAsignaturaOutputDto(asignatura);
+                }).toList();
     }
 
     @Override
     public AsignaturaOutputDto updateAsignatura(@Valid AsignaturaInputDto asignatura, String id) {
+        AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
         Asignatura asignaturaProvisional = asignaturaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         asignatura.setComments(asignatura.getComments() != null ?
                 asignatura.getComments() : asignaturaProvisional.getComments());
-        Asignatura asignatura1 = new Asignatura(asignatura);
+        Asignatura asignatura1 = mapper.asignaturaInputDtoToAsignatura(asignatura);
         asignatura1.setIdStudy(asignaturaProvisional.getIdStudy());
         if (asignatura.getIdStudent() != null){
             String idStudentOriginal = asignaturaProvisional.getStudent().getIdStudent();
@@ -67,7 +80,8 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
         } else {
             asignatura1.setStudent(asignaturaProvisional.getStudent());
         }
-        return asignaturaRepository.save(asignatura1).asignaturaToAsignaturaOutputDto();
+        asignaturaRepository.save(asignatura1);
+        return mapper.asignaturaToAsignaturaOutputDto(asignatura1);
     }
 
     @Override

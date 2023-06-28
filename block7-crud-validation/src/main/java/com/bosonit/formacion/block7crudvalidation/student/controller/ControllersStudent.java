@@ -58,5 +58,4 @@ public class ControllersStudent {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().body("Se ha borrado el estudiante con id: " + id);
     }
-
 }

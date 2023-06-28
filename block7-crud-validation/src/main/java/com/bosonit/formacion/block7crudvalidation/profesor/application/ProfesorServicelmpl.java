@@ -3,6 +3,7 @@ package com.bosonit.formacion.block7crudvalidation.profesor.application;
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.formacion.block7crudvalidation.persona.repository.PersonaRepository;
+import com.bosonit.formacion.block7crudvalidation.profesor.controller.mapper.ProfesorMapper;
 import com.bosonit.formacion.block7crudvalidation.profesor.domain.Profesor;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorFullOutputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorInputDto;
@@ -10,6 +11,7 @@ import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.Profes
 import com.bosonit.formacion.block7crudvalidation.profesor.repository.ProfesorRepository;
 import com.bosonit.formacion.block7crudvalidation.student.repository.StudentRepository;
 import jakarta.validation.Valid;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,24 +28,30 @@ public class ProfesorServicelmpl implements ProfesorService {
     StudentRepository studentRepository;
     @Override
     public ProfesorOutputDto addProfesor(@Valid ProfesorInputDto profesor) {
+        ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
         Persona persona = personaRepository.findById(profesor.getIdPersona())
                 .orElseThrow(EntityNotFoundException::new);
-        Profesor profesor1 = new Profesor(profesor);
+        Profesor profesor1 = mapper.profesorInputDtoProfesor(profesor);
         persona.setProfesor(profesor1);
         profesor1.setPersona(persona);
-        return profesorRepository.save(profesor1).profesorToProfesorOutputDto();
+        profesorRepository.save(profesor1);
+        return mapper.profesorToProfesorOutputDto(profesor1);
     }
 
     @Override
     public ProfesorOutputDto getProfesorById(String id) {
-        return profesorRepository.findById(id).orElseThrow(EntityNotFoundException::new)
-                .profesorToProfesorOutputDto();
+        ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
+        Profesor profesor = profesorRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        return mapper.profesorToProfesorOutputDto(profesor);
     }
 
     @Override
     public ProfesorFullOutputDto getProfesorByIdFull(String id) {
-        return profesorRepository.findById(id).orElseThrow(EntityNotFoundException::new)
-                .profesorToProfesorFullOutputDto();
+        ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
+        Profesor profesor =  profesorRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        return mapper.profesorToProfesorFullOutputDto(profesor);
     }
 
     @Override
@@ -59,26 +67,35 @@ public class ProfesorServicelmpl implements ProfesorService {
                 }
             }
             return check;
-        }).map(Profesor::profesorToProfesorOutputDto).toList();
+        }).map(profesor -> {
+            ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
+            return mapper.profesorToProfesorOutputDto(profesor);
+        }).toList();
     }
 
     @Override
     public Iterable<ProfesorOutputDto> getAllProfesor(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return profesorRepository.findAll(pageRequest).getContent().stream()
-                .map(Profesor::profesorToProfesorOutputDto).toList();
+                .map(profesor -> {
+                    ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
+                    return mapper.profesorToProfesorOutputDto(profesor);
+                }).toList();
     }
 
     @Override
     public ProfesorOutputDto updateProfesor(@Valid ProfesorInputDto profesor, String id) {
+        ProfesorMapper mapper = Mappers.getMapper(ProfesorMapper.class);
         Profesor profesorProvisional = profesorRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         profesor.setComments(profesor.getComments() != null ?
                 profesor.getComments() : profesorProvisional.getComments());
-        Profesor profesor1 = new Profesor(profesor);
+        Profesor profesor1 = mapper.profesorInputDtoProfesor(profesor);
         profesor1.setIdProfesor(id);
         if(profesor.getIdPersona() != 0){
             int idPersonaOriginal = profesorProvisional.getPersona().getIdPersona();
-            personaRepository.findById(idPersonaOriginal).orElseThrow(EntityNotFoundException::new).setProfesor(null);
+            personaRepository.findById(idPersonaOriginal)
+                    .orElseThrow(EntityNotFoundException::new)
+                    .setProfesor(null);
             Persona personaProvisional = personaRepository.findById(profesor.getIdPersona())
                     .orElseThrow(EntityNotFoundException::new);
             profesor1.setPersona(personaProvisional);
@@ -88,20 +105,25 @@ public class ProfesorServicelmpl implements ProfesorService {
         } else {
             profesor1.setPersona(profesorProvisional.getPersona());
         }
-        return profesorRepository.save(profesor1).profesorToProfesorOutputDto();
+        profesorRepository.save(profesor1);
+        return mapper.profesorToProfesorOutputDto(profesor1);
     }
 
     @Override
     public void deleteProfesor(String id) {
-        Profesor profesorProvisional = profesorRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Profesor profesorProvisional = profesorRepository
+                .findById(id)
+                .orElseThrow(EntityNotFoundException::new);
         if(profesorProvisional.getPersona() != null){
-            Persona personaProvisional = personaRepository.findById(profesorProvisional.getPersona().getIdPersona())
+            Persona personaProvisional = personaRepository
+                    .findById(profesorProvisional.getPersona().getIdPersona())
                     .orElseThrow(EntityNotFoundException::new);
             personaProvisional.setProfesor(null);
         }
         if(profesorProvisional.getStudents() != null){
             profesorProvisional.getStudents().forEach(student -> {
-                studentRepository.findById(student.getIdStudent()).orElseThrow(EntityNotFoundException::new)
+                studentRepository
+                        .findById(student.getIdStudent()).orElseThrow(EntityNotFoundException::new)
                         .setProfesor(null);
             });
         }
