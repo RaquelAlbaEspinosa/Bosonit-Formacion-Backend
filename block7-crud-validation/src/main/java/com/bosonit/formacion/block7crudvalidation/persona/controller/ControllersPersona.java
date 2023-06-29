@@ -1,9 +1,11 @@
 package com.bosonit.formacion.block7crudvalidation.persona.controller;
 
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
+import com.bosonit.formacion.block7crudvalidation.feign.ProfesorFeign;
 import com.bosonit.formacion.block7crudvalidation.persona.application.PersonaServiceslmpl;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
+import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorOutputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.net.URI;
 public class ControllersPersona {
     @Autowired
     PersonaServiceslmpl personaServices;
+    @Autowired
+    ProfesorFeign profesorFeign;
     @PostMapping
     public ResponseEntity<PersonaOutputDto> addPersona (@RequestBody PersonaInputDto persona){
         URI location = URI.create("/persona");
@@ -86,5 +90,10 @@ public class ControllersPersona {
         } catch (EntityNotFoundException e){
             throw new EntityNotFoundException();
         }
+    }
+    @GetMapping("/profesor/{id}")
+    public ResponseEntity<ProfesorOutputDto> getProfesorById (@PathVariable String id,
+                                                              @RequestParam(defaultValue = "simple", required = false) String outputType){
+        return profesorFeign.getProfesorById(id, outputType);
     }
 }
