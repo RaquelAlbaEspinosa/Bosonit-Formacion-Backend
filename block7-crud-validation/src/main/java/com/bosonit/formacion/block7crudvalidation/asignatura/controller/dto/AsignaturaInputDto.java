@@ -1,10 +1,8 @@
 package com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,11 +12,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class AsignaturaInputDto {
     String idStudy;
-    String IdStudent;
+    String idStudent;
     @NotNull(message = "La asignatura no debe ser nula")
     String asignatura;
     String comments;
-    @NotNull(message = "La fecha de inicio no debe ser nula")
+    @NotNull(message = "La fecha inicial no puede ser nula")
     Date initialDate;
     Date finishDate;
 }

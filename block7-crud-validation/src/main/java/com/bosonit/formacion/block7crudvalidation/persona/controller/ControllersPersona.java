@@ -2,7 +2,7 @@ package com.bosonit.formacion.block7crudvalidation.persona.controller;
 
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.feign.ProfesorFeign;
-import com.bosonit.formacion.block7crudvalidation.persona.application.PersonaServiceslmpl;
+import com.bosonit.formacion.block7crudvalidation.persona.application.PersonaServices;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorOutputDto;
@@ -16,7 +16,7 @@ import java.net.URI;
 @RequestMapping("/persona")
 public class ControllersPersona {
     @Autowired
-    PersonaServiceslmpl personaServices;
+    PersonaServices personaServices;
     @Autowired
     ProfesorFeign profesorFeign;
     @PostMapping

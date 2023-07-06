@@ -1,7 +1,7 @@
 package com.bosonit.formacion.block7crudvalidation.profesor.controller;
 
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
-import com.bosonit.formacion.block7crudvalidation.profesor.application.ProfesorServicelmpl;
+import com.bosonit.formacion.block7crudvalidation.profesor.application.ProfesorService;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorInputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorOutputDto;
 import jakarta.validation.Valid;
@@ -15,7 +15,7 @@ import java.net.URI;
 @RequestMapping("/profesor")
 public class ControllersProfesor {
     @Autowired
-    ProfesorServicelmpl profesorService;
+    ProfesorService profesorService;
     @PostMapping
     public ResponseEntity<ProfesorOutputDto> addProfesor (@Valid @RequestBody ProfesorInputDto profesor){
         URI location = URI.create("/profesor");

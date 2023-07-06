@@ -1,5 +1,6 @@
 package com.bosonit.formacion.block7crudvalidation.student.application;
 
+import com.bosonit.formacion.block7crudvalidation.asignatura.domain.Asignatura;
 import com.bosonit.formacion.block7crudvalidation.asignatura.repository.AsignaturaRepository;
 import com.bosonit.formacion.block7crudvalidation.persona.domain.Persona;
 import com.bosonit.formacion.block7crudvalidation.profesor.domain.Profesor;
@@ -143,6 +144,34 @@ public class StudentServicelmpl implements StudentService{
                     .orElseThrow(EntityNotFoundException::new);
             profesorProvisional.getStudents().remove(studentProvisional);
         }
+        if(studentProvisional.getAlumnosEstudios() != null){
+            List<String> idAsignaturas = studentProvisional.getAlumnosEstudios()
+                    .stream()
+                    .map(Asignatura::getIdStudy)
+                    .toList();
+            List<Asignatura> asignaturas = asignaturaRepository.findAll()
+                    .stream()
+                    .filter(asignatura -> {
+                        boolean check = false;
+                        for(String idStudy : idAsignaturas){
+                            if(asignatura.getIdStudy().equals(idStudy)){
+                                check = true;
+                            }
+                        }
+                        return check;
+                    }).toList();
+            asignaturas.forEach(asignatura -> asignatura.getStudent().remove(studentProvisional));
+            asignaturas.forEach(asignatura -> asignaturaRepository.save(asignatura));
+        }
         studentRepository.delete(studentProvisional);
+    }
+    @Override
+    public void addAsignaturaToStudent (String idStudent, String idAsignatura){
+        Asignatura asignatura = asignaturaRepository.findById(idAsignatura).orElseThrow();
+        Student student = studentRepository.findById(idStudent).orElseThrow();
+        student.getAlumnosEstudios().add(asignatura);
+        asignatura.getStudent().add(student);
+        studentRepository.save(student);
+        asignaturaRepository.save(asignatura);
     }
 }

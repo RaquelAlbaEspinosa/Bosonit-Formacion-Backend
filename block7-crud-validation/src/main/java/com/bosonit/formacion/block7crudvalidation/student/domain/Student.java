@@ -34,7 +34,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "idProfesor")
     Profesor profesor;
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "student")
     @Column(name = "asignaturas")
     List<Asignatura> alumnosEstudios;
 }

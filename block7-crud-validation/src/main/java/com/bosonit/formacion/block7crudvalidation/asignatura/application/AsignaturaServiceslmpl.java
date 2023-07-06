@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AsignaturaServiceslmpl implements AsignaturaServices {
     @Autowired
@@ -23,11 +25,7 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
     @Override
     public AsignaturaOutputDto addAsignatura(@Valid AsignaturaInputDto asignatura) {
         AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
-        Student studentProvisional = studentRepository.findById(asignatura.getIdStudent())
-                .orElseThrow(EntityNotFoundException::new);
         Asignatura asignatura1 = mapper.asignaturaInputDtoToAsignatura(asignatura);
-        studentProvisional.getAlumnosEstudios().add(asignatura1);
-        asignatura1.setStudent(studentProvisional);
         asignaturaRepository.save(asignatura1);
         return mapper.asignaturaToAsignaturaOutputDto(asignatura1);
     }
@@ -51,8 +49,10 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
     }
     @Override
     public Iterable<AsignaturaOutputDto> getAsignaturaByStudentId (String idStudent){
+        Student student = studentRepository.findById(idStudent).orElseThrow();
         return asignaturaRepository.findAll().stream()
-                .filter(asignatura -> asignatura.getStudent().getIdStudent().equals(idStudent))
+                .filter(asignatura -> asignatura.getStudent()
+                        .contains(student))
                 .map(asignatura -> {
                     AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
                     return mapper.asignaturaToAsignaturaOutputDto(asignatura);
@@ -63,20 +63,31 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
     public AsignaturaOutputDto updateAsignatura(@Valid AsignaturaInputDto asignatura, String id) {
         AsignaturaMapper mapper = Mappers.getMapper(AsignaturaMapper.class);
         Asignatura asignaturaProvisional = asignaturaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        asignatura.setComments(asignatura.getComments() != null ?
-                asignatura.getComments() : asignaturaProvisional.getComments());
         Asignatura asignatura1 = mapper.asignaturaInputDtoToAsignatura(asignatura);
         asignatura1.setIdStudy(asignaturaProvisional.getIdStudy());
         if (asignatura.getIdStudent() != null){
-            String idStudentOriginal = asignaturaProvisional.getStudent().getIdStudent();
-            Student studentProvisional = studentRepository.findById(idStudentOriginal)
-                    .orElseThrow(EntityNotFoundException::new);
-            studentProvisional.getAlumnosEstudios().remove(asignaturaProvisional);
-            studentProvisional.setIdStudent(studentProvisional.getIdStudent());
+            List<String> idStudentOriginal = asignaturaProvisional.getStudent()
+                    .stream()
+                    .map(Student::getIdStudent)
+                    .toList();
+            List<Student> studentsProvisional = studentRepository.findAll()
+                    .stream()
+                    .filter(student -> {
+                        boolean check = false;
+                        for (String idStudent: idStudentOriginal) {
+                            if (student.getIdStudent().equals(idStudent)) {
+                                check = true;
+                            }
+                        }
+                        return check;
+                    }).toList();
+            studentsProvisional.forEach(student -> student.getAlumnosEstudios().remove(asignaturaProvisional));
+            studentsProvisional.forEach(student -> studentRepository.save(student));
             Student student1 = studentRepository.findById(asignatura.getIdStudent())
                     .orElseThrow(EntityNotFoundException::new);
-            asignatura1.setStudent(student1);
+            asignatura1.getStudent().add(student1);
             student1.getAlumnosEstudios().add(asignatura1);
+            studentRepository.save(student1);
         } else {
             asignatura1.setStudent(asignaturaProvisional.getStudent());
         }
@@ -86,11 +97,10 @@ public class AsignaturaServiceslmpl implements AsignaturaServices {
 
     @Override
     public void deleteAsignatura(String id) {
-        Student studentProvisional = studentRepository.findById(asignaturaRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new).getStudent().getIdStudent())
-                .orElseThrow(EntityNotFoundException::new);
-        studentProvisional.getAlumnosEstudios().remove(asignaturaRepository
-                .findById(id).orElseThrow(EntityNotFoundException::new));
+        Asignatura asignatura = asignaturaRepository.findById(id).orElseThrow();
+        List<Student> students = asignaturaRepository.findById(id).orElseThrow().getStudent();
+        students.forEach(student -> student.getAlumnosEstudios().remove(asignatura));
+        students.forEach(student -> studentRepository.save(student));
         asignaturaRepository.deleteById(id);
     }
 }
