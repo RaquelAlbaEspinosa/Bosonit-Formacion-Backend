@@ -19,6 +19,7 @@ public class ControllersPersona {
     PersonaServices personaServices;
     @Autowired
     ProfesorFeign profesorFeign;
+    @CrossOrigin(origins = "https://cdpn.io")
     @PostMapping
     public ResponseEntity<PersonaOutputDto> addPersona (@RequestBody PersonaInputDto persona){
         URI location = URI.create("/persona");
@@ -60,6 +61,7 @@ public class ControllersPersona {
         }
         return personas;
     }
+    @CrossOrigin(origins = "https://cdpn.io")
     @GetMapping
     public Iterable getAllPersona (@RequestParam(defaultValue = "0", required = false) int pageNumber,
                                    @RequestParam(defaultValue = "4", required = false) int pageSize,
