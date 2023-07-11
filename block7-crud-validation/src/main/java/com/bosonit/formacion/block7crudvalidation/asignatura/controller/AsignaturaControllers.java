@@ -1,9 +1,11 @@
 package com.bosonit.formacion.block7crudvalidation.asignatura.controller;
 
+import com.bosonit.formacion.block7crudvalidation.asignatura.application.AsignaturaServices;
 import com.bosonit.formacion.block7crudvalidation.asignatura.application.AsignaturaServiceslmpl;
 import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaInputDto;
 import com.bosonit.formacion.block7crudvalidation.asignatura.controller.dto.AsignaturaOutputDto;
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
+import com.bosonit.formacion.block7crudvalidation.student.application.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,9 @@ import java.net.URI;
 @RequestMapping("/asignatura")
 public class AsignaturaControllers {
     @Autowired
-    AsignaturaServiceslmpl asignaturaServices;
+    AsignaturaServices asignaturaServices;
+    @Autowired
+    StudentService studentService;
     @PostMapping
     public ResponseEntity<AsignaturaOutputDto> addAsignatura (@Valid @RequestBody AsignaturaInputDto asignatura){
         URI location = URI.create("/asignatura");
@@ -38,6 +42,7 @@ public class AsignaturaControllers {
     }
     @GetMapping("/studentid/{idStudent}")
     public Iterable<AsignaturaOutputDto> getAsignaturaByStudentId (@PathVariable String idStudent){
+        studentService.getStudentById(idStudent);
         return asignaturaServices.getAsignaturaByStudentId(idStudent);
     }
     @PutMapping("/{id}")

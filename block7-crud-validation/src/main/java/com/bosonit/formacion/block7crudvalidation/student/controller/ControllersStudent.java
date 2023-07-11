@@ -1,12 +1,11 @@
 package com.bosonit.formacion.block7crudvalidation.student.controller;
 
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
-import com.bosonit.formacion.block7crudvalidation.student.application.StudentServicelmpl;
+import com.bosonit.formacion.block7crudvalidation.student.application.StudentService;
 import com.bosonit.formacion.block7crudvalidation.student.controller.dto.StudentInputDto;
 import com.bosonit.formacion.block7crudvalidation.student.controller.dto.StudentOutputDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ import java.net.URI;
 @RequestMapping("/student")
 public class ControllersStudent {
     @Autowired
-    StudentServicelmpl studentService;
+    StudentService studentService;
     @PostMapping
     public ResponseEntity<StudentOutputDto> addStudent (@Valid @RequestBody StudentInputDto student){
         URI location = URI.create("/student");
@@ -58,5 +57,13 @@ public class ControllersStudent {
     public ResponseEntity<String> deleteStudent (@PathVariable String id){
         studentService.deleteStudent(id);
         return ResponseEntity.ok().body("Se ha borrado el estudiante con id: " + id);
+    }
+    @PutMapping("/{idStudent}/{idAsignatura}")
+    public ResponseEntity<String> addAsignaturaToStudent (@PathVariable String idStudent,
+                                                          @PathVariable String idAsignatura){
+        studentService.getStudentById(idStudent);
+        studentService.addAsignaturaToStudent(idStudent, idAsignatura);
+        return ResponseEntity.ok()
+                .body("Se ha añadido la asignatura con id " + idAsignatura + " al estudiante con id " + idStudent);
     }
 }

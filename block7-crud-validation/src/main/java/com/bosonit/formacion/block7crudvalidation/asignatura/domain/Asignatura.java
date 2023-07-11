@@ -9,9 +9,10 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "alumnos_estudios")
+@Table(name = "asignatura")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,9 +24,9 @@ public class Asignatura {
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     String idStudy;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "idStudent")
-    Student student;
+    List<Student> student;
     @Column(name = "asignatura")
     String asignatura;
     @Column(name = "comentarios")

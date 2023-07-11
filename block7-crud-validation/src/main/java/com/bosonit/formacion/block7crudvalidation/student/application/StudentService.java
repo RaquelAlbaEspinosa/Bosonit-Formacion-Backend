@@ -12,4 +12,5 @@ public interface StudentService {
     Iterable<StudentOutputDto> getAllStudent (int pageNumber, int pageSize);
     StudentOutputDto updateStudent (StudentInputDto student, String id);
     void deleteStudent (String id);
+    void addAsignaturaToStudent (String idStudent, String idAsignatura);
 }
