@@ -1,0 +1,29 @@
+version: "3.2"
+services:
+  client:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      server:
+        condition: service_healthy
+    links:
+      - server
+    networks:
+      - mynetwork
+  server:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: contrasena
+      POSTGRES_USER: postgres
+      POSTGRES_DB: test
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+    driver: bridge
