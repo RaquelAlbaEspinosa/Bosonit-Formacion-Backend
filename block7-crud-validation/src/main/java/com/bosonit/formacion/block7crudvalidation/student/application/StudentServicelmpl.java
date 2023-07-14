@@ -42,10 +42,10 @@ public class StudentServicelmpl implements StudentService{
             profesor = profesorRepository.findById(student.getIdProfesor())
                     .orElseThrow(EntityNotFoundException::new);
             profesor.getStudents().add(student1);
+            student1.setProfesor(profesor);
         }
         persona.setStudent(student1);
         student1.setPersona(persona);
-        student1.setProfesor(profesor);
         studentRepository.save(student1);
         return mapper.studentToStudentOutputDto(student1);
     }
