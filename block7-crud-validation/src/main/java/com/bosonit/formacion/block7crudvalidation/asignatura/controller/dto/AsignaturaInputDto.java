@@ -9,12 +9,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class AsignaturaInputDto {
-    String idStudy;
-    String idStudent;
+    private String idStudy;
+    private String idStudent;
     @NotNull(message = "La asignatura no debe ser nula")
-    String nombreAsignatura;
-    String comments;
+    private String nombreAsignatura;
+    private String comments;
     @NotNull(message = "La fecha inicial no puede ser nula")
-    Date initialDate;
-    Date finishDate;
+    private Date initialDate;
+    private Date finishDate;
 }
