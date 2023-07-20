@@ -6,11 +6,9 @@ import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.Profes
 import com.bosonit.formacion.block7crudvalidation.profesor.domain.Profesor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface ProfesorMapper {
-    ProfesorMapper INSTANCE = Mappers.getMapper(ProfesorMapper.class);
     ProfesorOutputDto profesorToProfesorOutputDto (Profesor profesor);
     @Mapping(target = "idPersona", source = "profesor.persona.idPersona")
     @Mapping(target = "usuario", source = "profesor.persona.usuario")

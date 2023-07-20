@@ -6,11 +6,9 @@ import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.Persona
 import com.bosonit.formacion.block7crudvalidation.persona.domain.Persona;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface PersonaMapper {
-    PersonaMapper INSTANCE = Mappers.getMapper(PersonaMapper.class);
     PersonaOutputDto personaToPersonaOutputDto (Persona persona);
     @Mapping(target = "idStudent", source = "persona.student.idStudent")
     @Mapping(target = "numHoursWeek", source = "persona.student.numHoursWeek")

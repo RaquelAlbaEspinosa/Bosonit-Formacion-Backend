@@ -23,7 +23,6 @@ public class ExceptionController {
     @ExceptionHandler(UnprocessableEntityException.class)
     public ResponseEntity<CustomError> handleUnprocessableEntityException (UnprocessableEntityException ex){
         CustomError customError = new CustomError(new Date(), 422, ex.getMessage());
-        System.out.println(customError);
         return  ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(customError);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -31,7 +30,7 @@ public class ExceptionController {
     @ResponseBody
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);

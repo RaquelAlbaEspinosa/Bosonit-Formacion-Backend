@@ -59,7 +59,6 @@ public class PersonaServiceslmpl implements PersonaServices{
     public Iterable<PersonaOutputDto> getPersonaByUsuario (String usuario){
          return personaRepository.findAll()
                 .stream()
-                 .filter(persona -> persona.getUsuario().equals(usuario))
                 .map(persona -> {
                     PersonaMapper mapper = Mappers.getMapper(PersonaMapper.class);
                     return mapper.personaToPersonaOutputDto(persona);
@@ -135,11 +134,11 @@ public class PersonaServiceslmpl implements PersonaServices{
             Profesor profesor = persona.getProfesor();
             if(profesor.getStudents() != null){
                 List <Student> students = profesor.getStudents();
-                students.forEach(student -> {
+                students.forEach(student ->
                     studentRepository.findById(student.getIdStudent())
                             .orElseThrow(EntityNotFoundException::new)
-                            .setProfesor(null);
-                });
+                            .setProfesor(null)
+                );
             }
         }
         personaRepository.deleteById(id);

@@ -9,11 +9,9 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class AsignaturaOutputDto {
     String idStudy;
-    String asignatura;
+    String nombreAsignatura;
     String comments;
     Date initialDate;
     Date finishDate;

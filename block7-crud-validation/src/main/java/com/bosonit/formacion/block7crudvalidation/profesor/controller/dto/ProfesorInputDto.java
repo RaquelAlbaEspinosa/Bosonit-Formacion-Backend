@@ -8,12 +8,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class ProfesorInputDto {
-    String idProfesor;
-    String comments;
+    private String idProfesor;
+    private String comments;
     @NotBlank(message = "La rama no puede ser nula")
-    String branch;
-    int idPersona;
+    private String branch;
+    private int idPersona;
 }

@@ -6,7 +6,6 @@ import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import com.bosonit.formacion.block7crudvalidation.error.UnprocessableEntityException;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -15,26 +14,25 @@ import java.util.Date;
 @Table(name = "persona")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Persona {
     @Id
     @GeneratedValue
-    int idPersona;
-    String usuario;
-    String password;
-    String name;
-    String surname;
-    String companyEmail;
-    String personalEmail;
-    String city;
-    Boolean active;
-    Date createdDate;
-    String imageUrl;
-    Date terminationDate;
+    private int idPersona;
+    private String usuario;
+    private String password;
+    private String name;
+    private String surname;
+    private String companyEmail;
+    private String personalEmail;
+    private String city;
+    private Boolean active;
+    private Date createdDate;
+    private String imageUrl;
+    private Date terminationDate;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Student student;
+    private Student student;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Profesor profesor;
+    private Profesor profesor;
 
     public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
         //Usuario

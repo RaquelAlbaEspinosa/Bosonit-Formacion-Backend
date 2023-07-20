@@ -1,14 +1,16 @@
 package com.bosonit.formacion.block7crudvalidation.error;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class CustomError {
-    Date timestamp;
-    int HttpCode;
-    String message;
+    private Date timestamp;
+    private int HttpCodeNumber;
+    private String message;
 }

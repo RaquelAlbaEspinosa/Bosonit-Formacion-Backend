@@ -35,6 +35,9 @@ public class StudentRepositoryImpl {
 
         List<Predicate> predicates = new ArrayList<>();
 
+        String user = "usuario";
+        String name = "name";
+
         conditions.forEach((field, value) -> {
             switch (field) {
                 case "usuario":
@@ -57,15 +60,17 @@ public class StudentRepositoryImpl {
                     predicates.add(cb.lessThan(personaJoin.get("createdDate"),
                         (Date) value));
                     break;
+                default:
+                    break;
             }
         });
         query.select(root)
                 .where(predicates.toArray(new Predicate[predicates.size()]));
         if(orderBy != null) {
-            if (orderBy.equals("usuario")) {
-                query.orderBy(cb.asc(personaJoin.get("usuario")));
-            } else if (orderBy.equals("name")) {
-                query.orderBy(cb.asc(personaJoin.get("name")));
+            if (orderBy.equals(user)) {
+                query.orderBy(cb.asc(personaJoin.get(user)));
+            } else if (orderBy.equals(name)) {
+                query.orderBy(cb.asc(personaJoin.get(name)));
             }
         }
         TypedQuery<Student> typedQuery = entityManager.createQuery(query);
@@ -76,15 +81,6 @@ public class StudentRepositoryImpl {
                 .stream()
                 .map(mapper::studentToStudentOutputDto)
                 .toList();
-        /*
-        return entityManager
-                .createQuery(query)
-                .getResultList()
-                .stream()
-                .map(mapper::studentToStudentOutputDto)
-                .toList();
-
-         */
     }
 
 }

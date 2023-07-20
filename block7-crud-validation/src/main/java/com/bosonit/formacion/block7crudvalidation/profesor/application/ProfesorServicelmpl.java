@@ -121,11 +121,11 @@ public class ProfesorServicelmpl implements ProfesorService {
             personaProvisional.setProfesor(null);
         }
         if(profesorProvisional.getStudents() != null){
-            profesorProvisional.getStudents().forEach(student -> {
+            profesorProvisional.getStudents().forEach(student ->
                 studentRepository
                         .findById(student.getIdStudent()).orElseThrow(EntityNotFoundException::new)
-                        .setProfesor(null);
-            });
+                        .setProfesor(null)
+            );
         }
         profesorRepository.delete(profesorProvisional);
     }
