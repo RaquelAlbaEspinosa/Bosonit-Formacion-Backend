@@ -16,7 +16,7 @@ class Block7CrudValidationApplicationTests {
     @MockBean
     private ProfesorFeign profesorFeign;
     @Test
-    public void contextLoads() {
+    void contextLoads() {
         ProfesorOutputDto mockOutput = new ProfesorOutputDto();
         ResponseEntity<ProfesorOutputDto> mockResponse = ResponseEntity.ok(mockOutput);
         when(profesorFeign.getProfesorById(anyString(), anyString())).thenReturn(mockResponse);
