@@ -1,0 +1,1 @@
+java -jar /tmp/pruebaKafka2-0.0.1-SNAPSHOT.jar
