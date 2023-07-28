@@ -1,0 +1,60 @@
+version: "3.2"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_REPLICA_HOST: mongo
+      MONGO_REPLICA_PORT: 27017
+    networks:
+      - eureka_net
+  eureka:
+    build: ./eureka-naming-server
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - eureka_net
+  gateway:
+    container_name: gateway
+    build: ./api-gateway
+    depends_on:
+      - eureka
+    ports:
+      - "8082:8082"
+    environment:
+      UREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+    networks:
+      - eureka_net
+  back:
+    container_name: back
+    build: ./backend
+    ports:
+      - "8081:8081"
+    environment:
+      WAIT_HOSTS: mongo:27017
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/block16-springcloud
+      EUREKA_URI: http://eureka:8761/eureka
+    networks:
+      - eureka_net
+  back-front:
+    container_name: back-front
+    build: ./backend-Front
+    ports:
+      - "8080:8080"
+    environment:
+      WAIT_HOSTS: mongo:27017
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/block16-springcloud2
+      EUREKA_URI: http://eureka:8761/eureka
+    networks:
+      - eureka_net
+volumes:
+  dbdata6:
+networks:
+  eureka_net:
+    driver: bridge
