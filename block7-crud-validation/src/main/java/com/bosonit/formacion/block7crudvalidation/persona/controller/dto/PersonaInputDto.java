@@ -20,4 +20,5 @@ public class PersonaInputDto {
     private Date createdDate;
     private String imageUrl;
     private Date terminationDate;
+    private boolean admin = false;
 }

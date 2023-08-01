@@ -3,6 +3,7 @@ package com.bosonit.formacion.block7crudvalidation.persona.controller;
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.feign.ProfesorFeign;
 import com.bosonit.formacion.block7crudvalidation.persona.application.PersonaServices;
+import com.bosonit.formacion.block7crudvalidation.persona.auth.AuthenticationRequest;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorOutputDto;
@@ -22,7 +23,7 @@ public class ControllersPersona {
     @Autowired
     ProfesorFeign profesorFeign;
     @CrossOrigin(origins = "https://cdpn.io")
-    @PostMapping
+    @PostMapping("/auth")
     public ResponseEntity<PersonaOutputDto> addPersona (@RequestBody PersonaInputDto persona){
         URI location = URI.create("/persona");
             return ResponseEntity.created(location).body(personaServices.addPersona(persona));
@@ -97,5 +98,9 @@ public class ControllersPersona {
     public ResponseEntity<ProfesorOutputDto> getProfesorById (@PathVariable String id,
                                                               @RequestParam(defaultValue = "simple", required = false) String outputType){
         return profesorFeign.getProfesorById(id, outputType);
+    }
+    @PostMapping("/auth/login")
+    public String login (@RequestBody AuthenticationRequest authenticationRequest){
+        return personaServices.login(authenticationRequest.getUsuario(), authenticationRequest.getPassword());
     }
 }

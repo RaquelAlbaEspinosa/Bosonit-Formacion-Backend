@@ -1,5 +1,6 @@
 package com.bosonit.formacion.block7crudvalidation.persona.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Date;
@@ -19,4 +20,5 @@ public class PersonaOutputDto {
     private Date createdDate;
     private String imageUrl;
     private Date terminationDate;
+    private String accessToken;
 }

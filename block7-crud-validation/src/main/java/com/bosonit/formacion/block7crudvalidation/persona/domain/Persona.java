@@ -6,15 +6,22 @@ import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import com.bosonit.formacion.block7crudvalidation.error.UnprocessableEntityException;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "persona")
 @Getter
 @Setter
-public class Persona {
+@NoArgsConstructor
+public class Persona implements UserDetails {
     @Id
     @GeneratedValue
     private int idPersona;
@@ -33,6 +40,9 @@ public class Persona {
     private Student student;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Profesor profesor;
+    private boolean admin;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
         //Usuario
@@ -87,10 +97,50 @@ public class Persona {
         } else {
             this.createdDate = personaInputDto.getCreatedDate();
         }
+        this.admin = personaInputDto.isAdmin();
+        if(personaInputDto.isAdmin()){
+            this.role = Role.ADMIN;
+        } else {
+            this.role = Role.USER;
+        }
         //Sin validación
         this.surname = personaInputDto.getSurname();
         this.imageUrl = personaInputDto.getImageUrl();
         this.terminationDate = personaInputDto.getTerminationDate();
         this.idPersona = personaInputDto.getId();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.usuario;
+    }
+    @Override
+    public String getPassword(){
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
