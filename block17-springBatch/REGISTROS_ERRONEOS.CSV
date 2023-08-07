@@ -1,4 +1,3 @@
-Avila,Sat Sep 08 00:00:00 CEST 2018,51
 Las Palmas,Mon Nov 19 00:00:00 CET 2018,52
 Lleida,Sat Aug 25 00:00:00 CEST 2018,-25
 Zaragoza,Sat Nov 10 00:00:00 CET 2018,53
@@ -13,203 +12,31 @@ Pontevedra,Wed Jun 20 00:00:00 CEST 2018,-25
 Tarragona,Sun Oct 14 00:00:00 CEST 2018,52
 Teruel,Mon Jul 09 00:00:00 CEST 2018,58
 Salamanca,Sun Mar 04 00:00:00 CET 2018,56
-Avila,Sat Jun 23 00:00:00 CEST 2018,-26
-Guadalajara,Fri Mar 23 00:00:00 CET 2018,54
-Pontevedra,Sun Jan 07 00:00:00 CET 2018,-24
-Tarragona,Thu Sep 13 00:00:00 CEST 2018,-21
-Teruel,Wed Feb 21 00:00:00 CET 2018,-29
-Ciudad Real,Wed Jan 10 00:00:00 CET 2018,53
-Girona,Mon Nov 26 00:00:00 CET 2018,59
-Navarra,Sun Aug 19 00:00:00 CEST 2018,-27
-Palencia,Sat Jan 06 00:00:00 CET 2018,-30
-Badajoz,Fri Feb 23 00:00:00 CET 2018,-30
-Leon,Fri Jan 12 00:00:00 CET 2018,-27
-Santa Cruz de Tenerife,Sun Sep 23 00:00:00 CEST 2018,-22
-Las Palmas,Tue Sep 18 00:00:00 CEST 2018,-24
-Lleida,Thu Jul 12 00:00:00 CEST 2018,59
-Zaragoza,Tue Mar 06 00:00:00 CET 2018,52
-Salamanca,Sun Aug 12 00:00:00 CEST 2018,58
-Girona,Thu Sep 27 00:00:00 CEST 2018,-30
-Cuenca,Mon Jul 16 00:00:00 CEST 2018,-24
-Ourense,Mon Jan 15 00:00:00 CET 2018,-28
-Guipuzcoa,Sat Feb 24 00:00:00 CET 2018,60
-Toledo,Thu Nov 22 00:00:00 CET 2018,-30
-Pontevedra,Mon Feb 05 00:00:00 CET 2018,-26
-Barcelona,Thu Oct 25 00:00:00 CEST 2018,59
-Asturias,Mon Apr 16 00:00:00 CEST 2018,-23
-Ciudad Real,Sun Jan 07 00:00:00 CET 2018,60
-Palencia,Mon Feb 26 00:00:00 CET 2018,-23
-Burgos,Tue Apr 10 00:00:00 CEST 2018,59
-Santa Cruz de Tenerife,Thu Sep 27 00:00:00 CEST 2018,57
-Lleida,Sun Oct 07 00:00:00 CEST 2018,53
-Valladolid,Sun Oct 14 00:00:00 CEST 2018,-25
-Teruel,Sat Apr 07 00:00:00 CEST 2018,56
-Navarra,Tue Jun 26 00:00:00 CEST 2018,-29
-Palencia,Wed Nov 14 00:00:00 CET 2018,52
-Madrid,Sun Nov 11 00:00:00 CET 2018,-23
-Vizcaya,Tue May 22 00:00:00 CEST 2018,-30
-Valencia,Sun Jul 22 00:00:00 CEST 2018,54
-Burgos,Mon Mar 05 00:00:00 CET 2018,-22
-Sevilla,Tue Jan 16 00:00:00 CET 2018,-24
-Huelva,Wed Aug 22 00:00:00 CEST 2018,57
-Lugo,Fri Aug 24 00:00:00 CEST 2018,58
-Asturias,Thu Sep 06 00:00:00 CEST 2018,-28
-Tarragona,Mon Apr 16 00:00:00 CEST 2018,-26
-Teruel,Fri Nov 02 00:00:00 CET 2018,-22
-Soria,Wed Sep 12 00:00:00 CEST 2018,-23
-Girona,Mon Sep 17 00:00:00 CEST 2018,-23
-Valencia,Tue Nov 27 00:00:00 CET 2018,52
-Caceres,Thu Jul 12 00:00:00 CEST 2018,56
-Ourense,Fri Aug 17 00:00:00 CEST 2018,-26
-Santa Cruz de Tenerife,Mon Aug 20 00:00:00 CEST 2018,60
-Teruel,Wed Nov 14 00:00:00 CET 2018,52
-Girona,Wed Dec 26 00:00:00 CET 2018,51
-Ourense,Thu Nov 22 00:00:00 CET 2018,58
-Sevilla,Mon Apr 16 00:00:00 CEST 2018,54
-Santa Cruz de Tenerife,Fri Apr 13 00:00:00 CEST 2018,-29
-Huelva,Fri Aug 03 00:00:00 CEST 2018,-23
-Albacete,Fri Nov 02 00:00:00 CET 2018,-26
-Girona,Sat Jan 13 00:00:00 CET 2018,58
-Madrid,Fri Mar 02 00:00:00 CET 2018,-25
-Valencia,Fri Nov 02 00:00:00 CET 2018,56
-Caceres,Wed Dec 05 00:00:00 CET 2018,57
-La Rioja,Thu Sep 06 00:00:00 CEST 2018,-21
-Toledo,Sun Oct 14 00:00:00 CEST 2018,56
-Pontevedra,Fri Jun 22 00:00:00 CEST 2018,-26
-Tarragona,Sun Aug 19 00:00:00 CEST 2018,52
-Teruel,Wed Feb 07 00:00:00 CET 2018,-27
-Valencia,Sat Jan 20 00:00:00 CET 2018,51
-Guipuzcoa,Mon Mar 26 00:00:00 CEST 2018,58
-Sevilla,Fri Jun 15 00:00:00 CEST 2018,52
-Santa Cruz de Tenerife,Tue Jun 05 00:00:00 CEST 2018,54
-Toledo,Wed Jul 11 00:00:00 CEST 2018,-22
-Lugo,Sun Jun 24 00:00:00 CEST 2018,-30
-Pontevedra,Wed Nov 14 00:00:00 CET 2018,57
-Asturias,Wed Oct 17 00:00:00 CEST 2018,54
-Valladolid,Fri Sep 14 00:00:00 CEST 2018,-23
-Cadiz,Mon Sep 03 00:00:00 CEST 2018,54
-Soria,Fri Nov 23 00:00:00 CET 2018,-26
-Ciudad Real,Sat Dec 01 00:00:00 CET 2018,-30
-Salamanca,Sun Jul 22 00:00:00 CEST 2018,57
-Leon,Sat Oct 27 00:00:00 CEST 2018,-22
-Caceres,Thu Oct 25 00:00:00 CEST 2018,-27
-Almeria,Tue Sep 25 00:00:00 CEST 2018,52
-Jaen,Mon Jun 18 00:00:00 CEST 2018,60
-Huelva,Tue Apr 03 00:00:00 CEST 2018,-24
-Tarragona,Sat Jan 06 00:00:00 CET 2018,-25
-Teruel,Mon Nov 26 00:00:00 CET 2018,-30
-Alicante,Sat Aug 11 00:00:00 CEST 2018,-28
-Soria,Fri Oct 19 00:00:00 CEST 2018,59
-Ciudad Real,Thu Aug 02 00:00:00 CEST 2018,-27
-Zaragoza,Fri Oct 26 00:00:00 CEST 2018,-29
-Girona,Thu Oct 11 00:00:00 CEST 2018,56
-Vizcaya,Tue Apr 24 00:00:00 CEST 2018,51
-Leon,Sat Dec 08 00:00:00 CET 2018,51
-Almeria,Tue Jan 02 00:00:00 CET 2018,51
-Pontevedra,Thu Aug 09 00:00:00 CEST 2018,52
-Barcelona,Sat Aug 18 00:00:00 CEST 2018,60
-Ciudad Real,Mon Sep 17 00:00:00 CEST 2018,52
-Albacete,Mon Nov 05 00:00:00 CET 2018,-26
-Cuenca,Thu Feb 22 00:00:00 CET 2018,-23
-Badajoz,Sun Dec 16 00:00:00 CET 2018,-25
-Sevilla,Tue Mar 27 00:00:00 CEST 2018,60
-Huelva,Sat Nov 03 00:00:00 CET 2018,-25
-Lleida,Thu May 10 00:00:00 CEST 2018,54
-Tarragona,Sat Jun 02 00:00:00 CEST 2018,-23
-Ciudad Real,Sat Apr 14 00:00:00 CEST 2018,55
-Albacete,Wed Jul 25 00:00:00 CEST 2018,59
-Girona,Mon Feb 19 00:00:00 CET 2018,-24
-Navarra,Wed Aug 22 00:00:00 CEST 2018,51
-Palencia,Thu May 10 00:00:00 CEST 2018,58
-Guipuzcoa,Fri Nov 16 00:00:00 CET 2018,-30
-La Rioja,Sat Dec 15 00:00:00 CET 2018,-24
-Guadalajara,Wed Dec 26 00:00:00 CET 2018,60
-Lleida,Wed Dec 05 00:00:00 CET 2018,52
-Valladolid,Mon Apr 09 00:00:00 CEST 2018,54
-Teruel,Sun Apr 08 00:00:00 CEST 2018,-30
-Zaragoza,Fri May 18 00:00:00 CEST 2018,-22
-Leon,Wed Feb 14 00:00:00 CET 2018,-27
-Ourense,Mon Aug 20 00:00:00 CEST 2018,-24
-Sevilla,Sat Aug 11 00:00:00 CEST 2018,-24
-Avila,Sun Nov 04 00:00:00 CET 2018,53
-Cadiz,Mon Jun 04 00:00:00 CEST 2018,54
-Soria,Mon Dec 24 00:00:00 CET 2018,-21
-Cuenca,Sun Sep 16 00:00:00 CEST 2018,-24
-Caceres,Wed Aug 22 00:00:00 CEST 2018,-24
-Burgos,Fri Mar 09 00:00:00 CET 2018,59
-Toledo,Fri Sep 07 00:00:00 CEST 2018,-29
-Lugo,Fri Mar 23 00:00:00 CET 2018,-28
-Asturias,Tue Jun 12 00:00:00 CEST 2018,-29
-Zaragoza,Wed Sep 05 00:00:00 CEST 2018,-28
-Valencia,Wed Aug 01 00:00:00 CEST 2018,-26
-Huelva,Wed Sep 19 00:00:00 CEST 2018,-30
-Las Palmas,Fri May 18 00:00:00 CEST 2018,59
-Lleida,Sun Jun 24 00:00:00 CEST 2018,-23
-Lugo,Tue Oct 02 00:00:00 CEST 2018,-29
-Teruel,Tue Sep 25 00:00:00 CEST 2018,58
-Albacete,Wed Mar 14 00:00:00 CET 2018,-29
-Valencia,Wed Jul 18 00:00:00 CEST 2018,58
-Sevilla,Mon Apr 09 00:00:00 CEST 2018,53
-Lleida,Mon Aug 20 00:00:00 CEST 2018,-30
-Asturias,Thu Dec 13 00:00:00 CET 2018,-21
-Cadiz,Wed May 09 00:00:00 CEST 2018,57
-Teruel,Sun Jun 03 00:00:00 CEST 2018,60
-Palencia,Fri Jul 20 00:00:00 CEST 2018,51
-Sevilla,Tue Feb 20 00:00:00 CET 2018,53
-Lleida,Thu Jan 18 00:00:00 CET 2018,52
-Barcelona,Thu Jan 25 00:00:00 CET 2018,-28
-Palencia,Tue Jan 02 00:00:00 CET 2018,52
-Cuenca,Wed Dec 19 00:00:00 CET 2018,-27
-Badajoz,Fri Jul 13 00:00:00 CEST 2018,54
-Vizcaya,Thu Apr 26 00:00:00 CEST 2018,-23
-Burgos,Sat Mar 24 00:00:00 CET 2018,58
-Guipuzcoa,Mon Jun 25 00:00:00 CEST 2018,-30
-Barcelona,Tue Jun 05 00:00:00 CEST 2018,60
-Salamanca,Wed Jun 20 00:00:00 CEST 2018,-26
-Vizcaya,Mon Jan 22 00:00:00 CET 2018,58
-Guipuzcoa,Sat Oct 27 00:00:00 CEST 2018,60
-Avila,Sun Jun 03 00:00:00 CEST 2018,-23
-La Rioja,Wed Feb 21 00:00:00 CET 2018,52
-Guadalajara,Mon Dec 03 00:00:00 CET 2018,54
-Valladolid,Tue Nov 06 00:00:00 CET 2018,51
-Alicante,Sun Sep 02 00:00:00 CEST 2018,59
-Ciudad Real,Sat Nov 10 00:00:00 CET 2018,-29
-Girona,Fri Apr 20 00:00:00 CEST 2018,57
-Palencia,Mon Nov 26 00:00:00 CET 2018,55
-Cuenca,Wed Apr 11 00:00:00 CEST 2018,-23
-Badajoz,Sun May 20 00:00:00 CEST 2018,58
-Ourense,Tue May 01 00:00:00 CEST 2018,-26
-Guipuzcoa,Sat Feb 17 00:00:00 CET 2018,52
-La Rioja,Fri Oct 19 00:00:00 CEST 2018,-21
-Guadalajara,Fri Mar 02 00:00:00 CET 2018,58
-Las Palmas,Thu Dec 20 00:00:00 CET 2018,-29
-Lugo,Sun Mar 04 00:00:00 CET 2018,-30
-Soria,Mon Mar 05 00:00:00 CET 2018,56
-Salamanca,Sun Jun 24 00:00:00 CEST 2018,54
-Cuenca,Wed Nov 21 00:00:00 CET 2018,-24
-Valencia,Thu Nov 22 00:00:00 CET 2018,57
-Ourense,Sat Dec 22 00:00:00 CET 2018,59
-Almeria,Mon Mar 12 00:00:00 CET 2018,-25
-Jaen,Wed Mar 21 00:00:00 CET 2018,-24
-Sevilla,Mon Aug 20 00:00:00 CEST 2018,52
-Guadalajara,Thu Sep 27 00:00:00 CEST 2018,60
-Santa Cruz de Tenerife,Fri Aug 03 00:00:00 CEST 2018,54
-Las Palmas,Wed Apr 04 00:00:00 CEST 2018,-23
-Pontevedra,Sun Oct 07 00:00:00 CEST 2018,60
-Teruel,Tue Jan 23 00:00:00 CET 2018,60
-Badajoz,Sun Nov 25 00:00:00 CET 2018,-25
-Ourense,Mon Feb 12 00:00:00 CET 2018,-27
-Jaen,Sat Jul 21 00:00:00 CEST 2018,-25
-Huelva,Thu Dec 27 00:00:00 CET 2018,-26
-Barcelona,Mon Jun 25 00:00:00 CEST 2018,55
-Asturias,Fri Aug 10 00:00:00 CEST 2018,52
-Valladolid,Wed Jan 24 00:00:00 CET 2018,60
-Tarragona,Wed Jan 10 00:00:00 CET 2018,-25
-Teruel,Thu Jul 19 00:00:00 CEST 2018,-23
-Zaragoza,Tue Dec 18 00:00:00 CET 2018,59
-Girona,Fri Feb 09 00:00:00 CET 2018,-30
-Navarra,Fri Aug 17 00:00:00 CEST 2018,56
-Cuenca,Sat Nov 24 00:00:00 CET 2018,-28
-Jaen,Sun May 27 00:00:00 CEST 2018,51
-Sevilla,Sun Feb 18 00:00:00 CET 2018,-26
-Avila,Sat Sep 08 00:00:00 CEST 2018,51
+Las Palmas,Mon Nov 19 00:00:00 CET 2018,52
+Lleida,Sat Aug 25 00:00:00 CEST 2018,-25
+Zaragoza,Sat Nov 10 00:00:00 CET 2018,53
+Palencia,Thu Sep 20 00:00:00 CEST 2018,-30
+Badajoz,Mon Oct 22 00:00:00 CEST 2018,57
+Valencia,Sun Aug 12 00:00:00 CEST 2018,-21
+Avila,Sun Apr 08 00:00:00 CEST 2018,-25
+La Rioja,Wed Jun 13 00:00:00 CEST 2018,57
+Lleida,Mon Apr 23 00:00:00 CEST 2018,-22
+Lugo,Tue Jul 24 00:00:00 CEST 2018,-30
+Pontevedra,Wed Jun 20 00:00:00 CEST 2018,-25
+Tarragona,Sun Oct 14 00:00:00 CEST 2018,52
+Teruel,Mon Jul 09 00:00:00 CEST 2018,58
+Salamanca,Sun Mar 04 00:00:00 CET 2018,56
+Las Palmas,Mon Nov 19 00:00:00 CET 2018,52
+Lleida,Sat Aug 25 00:00:00 CEST 2018,-25
+Zaragoza,Sat Nov 10 00:00:00 CET 2018,53
+Palencia,Thu Sep 20 00:00:00 CEST 2018,-30
+Badajoz,Mon Oct 22 00:00:00 CEST 2018,57
+Valencia,Sun Aug 12 00:00:00 CEST 2018,-21
+Avila,Sun Apr 08 00:00:00 CEST 2018,-25
+La Rioja,Wed Jun 13 00:00:00 CEST 2018,57
+Lleida,Mon Apr 23 00:00:00 CEST 2018,-22
+Lugo,Tue Jul 24 00:00:00 CEST 2018,-30
+Pontevedra,Wed Jun 20 00:00:00 CEST 2018,-25
+Tarragona,Sun Oct 14 00:00:00 CEST 2018,52
+Teruel,Mon Jul 09 00:00:00 CEST 2018,58
+Salamanca,Sun Mar 04 00:00:00 CET 2018,56

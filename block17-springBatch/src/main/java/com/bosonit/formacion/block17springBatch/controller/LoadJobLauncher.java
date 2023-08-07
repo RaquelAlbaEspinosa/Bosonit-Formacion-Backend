@@ -1,12 +1,7 @@
 package com.bosonit.formacion.block17springBatch.controller;
 
-import com.bosonit.formacion.block17springBatch.batch.WeatherProcessor;
-import com.bosonit.formacion.block17springBatch.model.Weather;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.launch.JobOperator;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

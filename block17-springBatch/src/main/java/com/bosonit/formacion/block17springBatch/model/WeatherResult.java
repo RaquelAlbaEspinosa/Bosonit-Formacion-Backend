@@ -14,6 +14,7 @@ public class WeatherResult {
     private int weatherYear;
     private int midTemperature;
     private String risk;
+    private int registerNum;
     @Transient
     private List<Weather> weathers;
     @Transient
@@ -43,6 +44,7 @@ public class WeatherResult {
                     .average()
                     .orElse(0.0);
             this.midTemperature = (int) averageTemperature;
+            this.registerNum = weathers.size();
         }
     }
 
@@ -139,5 +141,13 @@ public class WeatherResult {
 
     public void setWeatherRisks(List<WeatherRisk> weatherRisks) {
         this.weatherRisks = weatherRisks;
+    }
+
+    public int getRegisterNum() {
+        return registerNum;
+    }
+
+    public void setRegisterNum(int registerNum) {
+        this.registerNum = registerNum;
     }
 }

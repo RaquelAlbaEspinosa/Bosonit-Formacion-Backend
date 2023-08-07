@@ -29,7 +29,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.BufferedWriter;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.bosonit.formacion.block17springBatch.repository")
