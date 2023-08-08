@@ -17,4 +17,5 @@ public interface PersonaServices {
     PersonaOutputDto updatePersona (PersonaInputDto persona, int id);
     void deletePersona (int id);
     String getTypeOfPersona (int id);
+    String login (String usuario, String password);
 }

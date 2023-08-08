@@ -3,6 +3,7 @@ package com.bosonit.formacion.block7crudvalidation.persona.controller;
 import com.bosonit.formacion.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.formacion.block7crudvalidation.feign.ProfesorFeign;
 import com.bosonit.formacion.block7crudvalidation.persona.application.PersonaServices;
+import com.bosonit.formacion.block7crudvalidation.persona.auth.AuthenticationRequest;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
 import com.bosonit.formacion.block7crudvalidation.profesor.controller.dto.ProfesorOutputDto;
@@ -15,12 +16,14 @@ import java.net.URI;
 @RestController
 @RequestMapping("/persona")
 public class ControllersPersona {
+    private String simple = "simple";
+    private String full = "full";
     @Autowired
     PersonaServices personaServices;
     @Autowired
     ProfesorFeign profesorFeign;
     @CrossOrigin(origins = "https://cdpn.io")
-    @PostMapping
+    @PostMapping("/auth")
     public ResponseEntity<PersonaOutputDto> addPersona (@RequestBody PersonaInputDto persona){
         URI location = URI.create("/persona");
             return ResponseEntity.created(location).body(personaServices.addPersona(persona));
@@ -31,17 +34,15 @@ public class ControllersPersona {
                                           String outputType){
         PersonaOutputDto persona = personaServices.getPersonaById(id);
         ResponseEntity response = ResponseEntity.ok().body(persona);
-        if(outputType.equals("simple")){
+        if(outputType.equals(this.simple)){
             response = ResponseEntity.ok().body(persona);
-        } else if (outputType.equals("full")){
-            switch (personaServices.getTypeOfPersona(persona.getIdPersona())) {
-                case "Estudiante":
-                    response = ResponseEntity.ok()
-                            .body(personaServices.getPersonaByIdEstudiante(id));
-                    break;
-                case "Profesor":
-                    response = ResponseEntity.ok()
-                            .body(personaServices.getPersonaByIdProfesor(id));
+        } else if (outputType.equals(this.full)){
+            if (personaServices.getTypeOfPersona(persona.getIdPersona()).equals("Estudiante")) {
+                response = ResponseEntity.ok()
+                        .body(personaServices.getPersonaByIdEstudiante(id));
+            } else if(personaServices.getTypeOfPersona(persona.getIdPersona()).equals("Profesor")){
+                response = ResponseEntity.ok()
+                        .body(personaServices.getPersonaByIdProfesor(id));
             }
         } else {
             response = ResponseEntity.badRequest()
@@ -54,9 +55,9 @@ public class ControllersPersona {
                                          @RequestParam(defaultValue = "simple", required = false)
                                          String outputType){
         Iterable personas = null;
-        if(outputType.equals("simple")){
+        if(outputType.equals(this.simple)){
             personas = personaServices.getPersonaByUsuario(usuario);
-        } else if (outputType.equals("full")) {
+        } else if (outputType.equals(this.full)) {
             personas = personaServices.getPersonaByUsuarioFull(usuario);
         }
         return personas;
@@ -67,9 +68,9 @@ public class ControllersPersona {
                                    @RequestParam(defaultValue = "4", required = false) int pageSize,
                                    @RequestParam(defaultValue = "simple", required = false) String outputType) {
         Iterable personas = null;
-        if(outputType.equals("simple")){
+        if(outputType.equals(this.simple)){
             personas = personaServices.getAllPersona(pageNumber, pageSize);
-        } else if (outputType.equals("full")) {
+        } else if (outputType.equals(this.full)) {
             personas = personaServices.getAllPersonaFull(pageNumber, pageSize);
         }
         return personas;
@@ -97,5 +98,9 @@ public class ControllersPersona {
     public ResponseEntity<ProfesorOutputDto> getProfesorById (@PathVariable String id,
                                                               @RequestParam(defaultValue = "simple", required = false) String outputType){
         return profesorFeign.getProfesorById(id, outputType);
+    }
+    @PostMapping("/auth/login")
+    public String login (@RequestBody AuthenticationRequest authenticationRequest){
+        return personaServices.login(authenticationRequest.getUsuario(), authenticationRequest.getPassword());
     }
 }

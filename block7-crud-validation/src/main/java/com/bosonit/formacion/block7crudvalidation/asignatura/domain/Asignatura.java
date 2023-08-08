@@ -2,9 +2,7 @@ package com.bosonit.formacion.block7crudvalidation.asignatura.domain;
 
 import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,24 +13,22 @@ import java.util.List;
 @Table(name = "asignatura")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Asignatura {
     @Id
     @Column(name = "id_study")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    String idStudy;
+    private String idStudy;
 
     @ManyToMany
     @JoinColumn(name = "idStudent")
-    List<Student> student;
+    private List<Student> student;
     @Column(name = "asignatura")
-    String asignatura;
+    private String nombreAsignatura;
     @Column(name = "comentarios")
-    String comments;
+    private String comments;
     @Column(name = "fecha_inicio")
-    Date initialDate;
+    private Date initialDate;
     @Column(name = "fecha_final")
-    Date finishDate;
+    private Date finishDate;
 }

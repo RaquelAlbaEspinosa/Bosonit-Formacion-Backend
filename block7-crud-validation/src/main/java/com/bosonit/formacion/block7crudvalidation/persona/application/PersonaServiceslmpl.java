@@ -1,5 +1,6 @@
 package com.bosonit.formacion.block7crudvalidation.persona.application;
 
+import com.bosonit.formacion.block7crudvalidation.persona.auth.JwtService;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaEstudianteOutputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaInputDto;
 import com.bosonit.formacion.block7crudvalidation.persona.controller.dto.PersonaOutputDto;
@@ -15,6 +16,9 @@ import com.bosonit.formacion.block7crudvalidation.student.repository.StudentRepo
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,12 +31,22 @@ public class PersonaServiceslmpl implements PersonaServices{
     StudentRepository studentRepository;
     @Autowired
     ProfesorRepository profesorRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtService jwtService;
+    @Autowired
+    AuthenticationManager authenticationManager;
     @Override
     public PersonaOutputDto addPersona (PersonaInputDto persona){
         PersonaMapper mapper = Mappers.getMapper(PersonaMapper.class);
         Persona persona1 = new Persona(persona);
+        persona1.setPassword(passwordEncoder.encode(persona1.getPassword()));
         personaRepository.save(persona1);
-        return mapper.personaToPersonaOutputDto(persona1);
+        var jwtToken = jwtService.generateToken(persona1);
+        PersonaOutputDto personaOutputDto = mapper.personaToPersonaOutputDto(persona1);
+        personaOutputDto.setAccessToken(jwtToken);
+        return personaOutputDto;
     }
     @Override
     public PersonaOutputDto getPersonaById (int id){
@@ -59,7 +73,6 @@ public class PersonaServiceslmpl implements PersonaServices{
     public Iterable<PersonaOutputDto> getPersonaByUsuario (String usuario){
          return personaRepository.findAll()
                 .stream()
-                 .filter(persona -> persona.getUsuario().equals(usuario))
                 .map(persona -> {
                     PersonaMapper mapper = Mappers.getMapper(PersonaMapper.class);
                     return mapper.personaToPersonaOutputDto(persona);
@@ -135,11 +148,11 @@ public class PersonaServiceslmpl implements PersonaServices{
             Profesor profesor = persona.getProfesor();
             if(profesor.getStudents() != null){
                 List <Student> students = profesor.getStudents();
-                students.forEach(student -> {
+                students.forEach(student ->
                     studentRepository.findById(student.getIdStudent())
                             .orElseThrow(EntityNotFoundException::new)
-                            .setProfesor(null);
-                });
+                            .setProfesor(null)
+                );
             }
         }
         personaRepository.deleteById(id);
@@ -156,5 +169,14 @@ public class PersonaServiceslmpl implements PersonaServices{
             typeOfPersona = "none";
         }
         return typeOfPersona;
+    }
+    public String login (String usuario, String password){
+        var user = personaRepository.findAll()
+                .stream()
+                .filter(persona -> persona.getUsuario().equals(usuario))
+                .findFirst().orElseThrow();
+        authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(usuario, password));
+        return jwtService.generateToken(user);
     }
 }

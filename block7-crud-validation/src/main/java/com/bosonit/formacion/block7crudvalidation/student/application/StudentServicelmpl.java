@@ -67,12 +67,12 @@ public class StudentServicelmpl implements StudentService{
 
     @Override
     public Iterable<StudentOutputDto> getStudentByUsuario(String usuario) {
-        List<Integer> IdList = personaRepository.findAll().stream()
+        List<Integer> idList = personaRepository.findAll().stream()
                 .filter(persona -> persona.getUsuario().equals(usuario))
                 .map(Persona::getIdPersona).toList();
         return studentRepository.findAll().stream().filter(student -> {
             boolean check = false;
-            for(Integer id : IdList){
+            for(Integer id : idList){
             if(student.getPersona().getIdPersona() == id){
                 check = true;
             }

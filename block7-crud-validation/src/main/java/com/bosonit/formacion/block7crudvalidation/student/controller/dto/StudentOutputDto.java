@@ -1,16 +1,13 @@
 package com.bosonit.formacion.block7crudvalidation.student.controller.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class StudentOutputDto {
-    String idStudent;
-    int numHoursWeek;
-    String comments;
-    String branch;
-    String idProfesor;
+    private String idStudent;
+    private int numHoursWeek;
+    private String comments;
+    private String branch;
+    private String idProfesor;
 }

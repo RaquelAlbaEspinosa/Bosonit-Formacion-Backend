@@ -6,11 +6,12 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 public class UnprocessableEntityException extends HttpStatusCodeException {
-    String message;
+    private final String message;
     public UnprocessableEntityException(String message){
         super(HttpStatus.UNPROCESSABLE_ENTITY);
         this.message = message;
     }
+    @Override
     public String getMessage() {
         return message;
     }

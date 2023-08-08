@@ -6,11 +6,9 @@ import com.bosonit.formacion.block7crudvalidation.student.controller.dto.Student
 import com.bosonit.formacion.block7crudvalidation.student.domain.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface StudentMapper {
-    StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
     @Mapping(target = "idProfesor", source = "student.profesor.idProfesor")
     StudentOutputDto studentToStudentOutputDto (Student student);
 

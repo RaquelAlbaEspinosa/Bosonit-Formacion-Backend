@@ -8,33 +8,41 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "persona")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Persona {
+public class Persona implements UserDetails {
     @Id
     @GeneratedValue
-    int idPersona;
-    String usuario;
-    String password;
-    String name;
-    String surname;
-    String companyEmail;
-    String personalEmail;
-    String city;
-    Boolean active;
-    Date createdDate;
-    String imageUrl;
-    Date terminationDate;
+    private int idPersona;
+    private String usuario;
+    private String password;
+    private String name;
+    private String surname;
+    private String companyEmail;
+    private String personalEmail;
+    private String city;
+    private Boolean active;
+    private Date createdDate;
+    private String imageUrl;
+    private Date terminationDate;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Student student;
+    private Student student;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Profesor profesor;
+    private Profesor profesor;
+    private boolean admin;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Persona (PersonaInputDto personaInputDto) throws UnprocessableEntityException {
         //Usuario
@@ -89,10 +97,50 @@ public class Persona {
         } else {
             this.createdDate = personaInputDto.getCreatedDate();
         }
+        this.admin = personaInputDto.isAdmin();
+        if(personaInputDto.isAdmin()){
+            this.role = Role.ADMIN;
+        } else {
+            this.role = Role.USER;
+        }
         //Sin validación
         this.surname = personaInputDto.getSurname();
         this.imageUrl = personaInputDto.getImageUrl();
         this.terminationDate = personaInputDto.getTerminationDate();
         this.idPersona = personaInputDto.getId();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.usuario;
+    }
+    @Override
+    public String getPassword(){
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

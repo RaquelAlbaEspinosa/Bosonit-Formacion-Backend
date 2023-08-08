@@ -1,0 +1,9 @@
+exit
+db.login()
+db.getUsers()
+db.getUser("user")
+show users
+db.getUsers()
+use test
+db.getUsers()
+use admin

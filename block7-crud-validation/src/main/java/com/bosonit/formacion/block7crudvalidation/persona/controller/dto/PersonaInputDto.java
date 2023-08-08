@@ -1,25 +1,24 @@
 package com.bosonit.formacion.block7crudvalidation.persona.controller.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 public class PersonaInputDto {
-    int id;
-    String usuario;
-    String password;
-    String name;
-    String surname;
-    String companyEmail;
-    String personalEmail;
-    String city;
-    Boolean active;
-    Date createdDate;
-    String imageUrl;
-    Date terminationDate;
+    private int id;
+    private String usuario;
+    private String password;
+    private String name;
+    private String surname;
+    private String companyEmail;
+    private String personalEmail;
+    private String city;
+    private Boolean active;
+    private Date createdDate;
+    private String imageUrl;
+    private Date terminationDate;
+    private boolean admin = false;
 }
